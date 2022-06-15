@@ -29,6 +29,24 @@ else
     app.UseHsts();
 }
 
+//static void Main(string[] args)
+//{
+//    using (var contexto = new ApplicationDbContext())
+//    {
+//        contexto.Database.EnsureDeleted();
+//        contexto.Database.EnsureCreated();
+
+//        var inserir = new[]
+//        {
+//            new AspNetRoles { Id= 1, Name= "Admin", NormalizedName= "admin", ConcurrencyStamp= 123456 },
+
+//        };
+//    };
+
+//    }
+
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

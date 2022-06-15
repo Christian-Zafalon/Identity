@@ -22,6 +22,27 @@ namespace Identity.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Identity.Models.Fornecedor", b =>
+                {
+                    b.Property<long>("IdFornecedor")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("IdFornecedor"), 1L, 1);
+
+                    b.Property<string>("Cnpj")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdFornecedor");
+
+                    b.ToTable("Fornecedor");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -222,6 +243,33 @@ namespace Identity.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Identity.Models.Fornecedor", b =>
+                {
+                    b.OwnsOne("Identity.Models.Produto", "ProdutoFornecedor", b1 =>
+                        {
+                            b1.Property<long>("FornecedorIdFornecedor")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Nome")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Preco")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("FornecedorIdFornecedor");
+
+                            b1.ToTable("Produto");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FornecedorIdFornecedor");
+                        });
+
+                    b.Navigation("ProdutoFornecedor")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
